@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiktok</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <h1 class="PS">HÂN VÀ KHANG </h1>
+    <div class="container">
+        <video id="videoPlayer" controls autoplay src="./assets/Download.mp4"></video>
+        <div>
+            <button id="previousButton">Previous</button>
+            <button id="nextButton">Next</button>
+        </div>
+
+        <h2>Comments</h2>
+        <form id="commentForm">
+            <input type="text" id="commentInput" placeholder="Enter your comment">
+            <button type="submit">Submit</button>
+        </form>
+        <ul id="commentsContainer"></ul>
+    </div>
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // Lấy tham chiếu tới các phần tử DOM
+        const videoPlayer = document.getElementById('videoPlayer');
+        const previousButton = document.getElementById('previousButton');
+        const nextButton = document.getElementById('nextButton');
+        const commentForm = document.getElementById('commentForm');
+        const commentInput = document.getElementById('commentInput');
+        const commentsContainer = document.getElementById('commentsContainer');
+
+        // Khởi tạo biến lưu trữ danh sách video
+        let videoList = [];
+
+        // Lấy dữ liệu từ API
+        function fetchVideoData() {
+            axios.get('http://localhost:3000/videos')
+                .then(response => {
+                    // Gán danh sách video từ API vào biến videoList
+                    videoList = response.data;
+                    showVideo(0);
+                    fetchComments(videoList[0].comments);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Hiển thị video
+        function showVideo(index) {
+            const video = videoList[index];
+            videoPlayer.src = video.url;
+            currentVideoIndex = index;
+            fetchComments(video.comments);
+        }
+
+        // Lấy danh sách bình luận từ API
+        function fetchComments(commentIds) {
+            axios.get('http://localhost:3000/comments')
+                .then(response => {
+                    const comments = response.data;
+                    const videoComments = commentIds.map(commentId => comments.find(comment => comment.id === commentId));
+                    displayComments(videoComments);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Hiển thị danh sách bình luận
+        function displayComments(comments) {
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                const li = document.createElement('li');
+                li.innerText = comment.text;
+                commentsContainer.appendChild(li);
+            });
+        }
+
+        // Gửi bình luận mới
+        function postComment(videoId, commentText) {
+            axios.post('http://localhost:3000/comments', { text: commentText })
+                .then(response => {
+                    const newComment = response.data;
+                    const video = videoList[currentVideoIndex];
+                    video.comments.push(newComment.id); // Thêm ID bình luận vào mảng comments của video hiện tại
+                    fetchComments(video.comments);
+                    commentInput.value = '';
+
+                    // Cập nhật bảng videos trên API server
+                    axios.put(`http://localhost:3000/videos/${videoId}`, video)
+                        .then(response => {
+                            console.log('Video updated:', response.data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Chuyển video lên
+        function playPreviousVideo() {
+            if (currentVideoIndex > 0) {
+                currentVideoIndex--;
+                showVideo(currentVideoIndex);
+            }
+        }
+
+        // Chuyển video xuống
+        function playNextVideo() {
+            if (currentVideoIndex < videoList.length - 1) {
+                currentVideoIndex++;
+                showVideo(currentVideoIndex);
+            }
+        }
+
+        // Xử lý khi người dùng gửi bình luận
+        function handleCommentSubmit(event) {
+            event.preventDefault(); // Ngăn chặn sự kiện submit mặc định của form
+            const commentText = commentInput.value.trim();
+            if (commentText !== '') {
+                commentInput.disabled = true; // Vô hiệu hóa input bình luận để ngăn người dùng nhập liệu mới
+                postComment(videoList[currentVideoIndex].id, commentText);
+            }
+        }
+
+        // Gán sự kiện click cho các nút chuyển video
+        // Gán sự kiện click cho nút Previous
+        previousButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn sự kiện click mặc định
+            playPreviousVideo();
+        });
+
+        // Gán sự kiện click cho nút Next
+        nextButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn sự kiện click mặc định
+            playNextVideo();
+        });
+
+        // Gán sự kiện submit cho form Comment
+        commentForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn chặn sự kiện submit mặc định của form
+            handleCommentSubmit(event);
+        });
+
+        // Lấy dữ liệu video khi trang tải xong
+        window.addEventListener('DOMContentLoaded', fetchVideoData);
+    </script>
+</body>
+
+</html>

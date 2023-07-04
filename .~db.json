@@ -1,0 +1,126 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "title": "Video 1",
+      "url": "./assets/Download (1).mp4",
+      "likes": 1,
+      "shares": 0,
+      "comments": [
+        1,
+        2,
+        3,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Video 2",
+      "url": "./assets/Download.mp4",
+      "likes": 3,
+      "shares": 2,
+      "comments": [
+        3,
+        4,
+        7,
+        8
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "text": "hello",
+      "id": 1
+    },
+    {
+      "text": "s",
+      "id": 2
+    },
+    {
+      "text": "d",
+      "id": 3
+    },
+    {
+      "text": "d",
+      "id": 4
+    },
+    {
+      "text": "d",
+      "id": 5
+    },
+    {
+      "text": "ê",
+      "id": 6
+    },
+    {
+      "text": "e",
+      "id": 7
+    },
+    {
+      "text": "s",
+      "id": 8
+    },
+    {
+      "text": "ssss",
+      "id": 9
+    },
+    {
+      "text": "ssssss",
+      "id": 10
+    },
+    {
+      "text": "s",
+      "id": 11
+    },
+    {
+      "text": "a",
+      "id": 12
+    },
+    {
+      "text": "s",
+      "id": 13
+    },
+    {
+      "text": "ee",
+      "id": 14
+    },
+    {
+      "text": "ee1",
+      "id": 15
+    },
+    {
+      "text": "sss",
+      "id": 16
+    },
+    {
+      "text": "w",
+      "id": 17
+    },
+    {
+      "text": "ee",
+      "id": 18
+    }
+  ],
+  "likes": [
+    {
+      "videoId": 1,
+      "count": 1
+    },
+    {
+      "videoId": 2,
+      "count": 3
+    },
+    {
+      "videoId": 3,
+      "count": 5
+    }
+  ]
+}
