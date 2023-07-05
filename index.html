@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<img class="logo" src="./assets/img/TikTok_logo.svg.png" alt="">
+    <img class="logo" src="./assets/img/TikTok_logo.svg.png" alt="">
     <div class="container">
         <div class="vid">
             <video crossorigin="use-credentials" preload="" playsinline controls autoplay id="videoPlayer"
@@ -20,17 +20,41 @@
                 <button id="nextButton"><i class="fa-solid fa-down-long"></i></button>
             </div>
             <div class="option2">
-                <button ><i class="fa-solid fa-heart"></i></button>
-                <button class="cmt" ><i class="fa-regular fa-comment-dots"></i></button>
-                <button ><i class="fa-solid fa-share-nodes"></i></button>
+                <button><i class="fa-solid fa-heart"></i></button>
+                <button class="cmt"><i class="fa-regular fa-comment-dots"></i></button>
+                <button><i class="fa-solid fa-share-nodes"></i></button>
 
             </div>
             <div class="comment">
+                <div class="hr"></div>
+                <div class="avt">
+                    <div>
+                        <img src="./assets/img/logo.png" alt="">
+                    </div>
+                    <div class="profile">
+                        <div class="name">
+                            yenkim0702</div>
+                        <div class="username">Thor</div>
+                    </div>
+                    <div class="fl">
+                        Follow
+                    </div>
+                </div>
+                <div class="des">
+                    Đạp xe <span style="color: darkblue;">#kimyen07022004</span>
+                </div>
+                <div class="music">
+                    <i class="fa-solid fa-music"></i> 没有理由-Cover-永彬RyanB
+                </div>
+
+
+
+    
+                <ul id="commentsContainer"></ul>
                 <form id="commentForm">
                     <input type="text" id="commentInput" placeholder="Enter your comment">
                     <button type="submit">Submit</button>
                 </form>
-                <ul id="commentsContainer"></ul>
             </div>
         </div>
     </div>
@@ -175,19 +199,19 @@
 
 
         const commentButton = document.getElementById('commentButton');
-const commentBox = document.getElementById('commentBox');
+        const commentBox = document.getElementById('commentBox');
 
-// Đăng ký sự kiện nhấp vào nút comment
-commentButton.addEventListener('click', function() {
-  // Kiểm tra trạng thái hiển thị của bảng comment
-  if (commentBox.style.display === 'none') {
-    // Nếu đang ẩn, thay đổi hiển thị thành hiển thị
-    commentBox.style.display = 'block';
-  } else {
-    // Nếu đang hiển thị, thay đổi hiển thị thành ẩn
-    commentBox.style.display = 'none';
-  }
-});
+        // Đăng ký sự kiện nhấp vào nút comment
+        commentButton.addEventListener('click', function () {
+            // Kiểm tra trạng thái hiển thị của bảng comment
+            if (commentBox.style.display === 'none') {
+                // Nếu đang ẩn, thay đổi hiển thị thành hiển thị
+                commentBox.style.display = 'block';
+            } else {
+                // Nếu đang hiển thị, thay đổi hiển thị thành ẩn
+                commentBox.style.display = 'none';
+            }
+        });
     </script>
 </body>
 
