@@ -1,14 +1,18 @@
-body{
+body {
     background-color: black;
 }
 
-.container{
-    width: 200px;
-    height: 300px;
-    padding: 100px;
-    margin: 0px auto;
+.container {
+    width: auto;
+    height: auto;
+    background-color: aqua;
 }
 
-ul{
+ul {
     color: white;
+}
+
+video {
+    width: 300px;
+    padding: 50px;
 }

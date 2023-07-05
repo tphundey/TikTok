@@ -9,21 +9,29 @@
 </head>
 
 <body>
-    <h1 class="PS">HÂN VÀ KHANG </h1>
-    <div class="container">
-        <video id="videoPlayer" controls autoplay src="./assets/Download.mp4"></video>
-        <div>
-            <button id="previousButton">Previous</button>
-            <button id="nextButton">Next</button>
-        </div>
 
-        <h2>Comments</h2>
-        <form id="commentForm">
-            <input type="text" id="commentInput" placeholder="Enter your comment">
-            <button type="submit">Submit</button>
-        </form>
-        <ul id="commentsContainer"></ul>
+    <div class="container">
+        <div class="vid">
+            <video id="videoPlayer" controls autoplay src="./assets/Download.mp4"></video>
+            <div>
+                <button id="previousButton">Previous</button>
+                <button id="nextButton">Next</button>
+            </div>
+
+            <h2>Comments</h2>
+            <form id="commentForm">
+                <input type="text" id="commentInput" placeholder="Enter your comment">
+                <button type="submit">Submit</button>
+            </form>
+            <ul id="commentsContainer"></ul>
+        </div>
     </div>
+
+
+
+
+    //xử lý logic
+
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
