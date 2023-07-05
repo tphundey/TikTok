@@ -6,32 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiktok</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://kit.fontawesome.com/d829d3809c.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-
+<img class="logo" src="./assets/img/TikTok_logo.svg.png" alt="">
     <div class="container">
         <div class="vid">
-            <video id="videoPlayer" controls autoplay src="./assets/Download.mp4"></video>
-            <div>
-                <button id="previousButton">Previous</button>
-                <button id="nextButton">Next</button>
+            <video crossorigin="use-credentials" preload="" playsinline controls autoplay id="videoPlayer"
+                src=""></video>
+            <div class="option">
+                <button id="previousButton"><i class="fa-solid fa-up-long"></i></button>
+                <button id="nextButton"><i class="fa-solid fa-down-long"></i></button>
             </div>
+            <div class="option2">
+                <button ><i class="fa-solid fa-heart"></i></button>
+                <button class="cmt" ><i class="fa-regular fa-comment-dots"></i></button>
+                <button ><i class="fa-solid fa-share-nodes"></i></button>
 
-            <h2>Comments</h2>
-            <form id="commentForm">
-                <input type="text" id="commentInput" placeholder="Enter your comment">
-                <button type="submit">Submit</button>
-            </form>
-            <ul id="commentsContainer"></ul>
+            </div>
+            <div class="comment">
+                <form id="commentForm">
+                    <input type="text" id="commentInput" placeholder="Enter your comment">
+                    <button type="submit">Submit</button>
+                </form>
+                <ul id="commentsContainer"></ul>
+            </div>
         </div>
     </div>
 
 
 
 
-    //xử lý logic
-
+    <!-- xử lý logic -->
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -163,6 +170,24 @@
 
         // Lấy dữ liệu video khi trang tải xong
         window.addEventListener('DOMContentLoaded', fetchVideoData);
+
+
+
+
+        const commentButton = document.getElementById('commentButton');
+const commentBox = document.getElementById('commentBox');
+
+// Đăng ký sự kiện nhấp vào nút comment
+commentButton.addEventListener('click', function() {
+  // Kiểm tra trạng thái hiển thị của bảng comment
+  if (commentBox.style.display === 'none') {
+    // Nếu đang ẩn, thay đổi hiển thị thành hiển thị
+    commentBox.style.display = 'block';
+  } else {
+    // Nếu đang hiển thị, thay đổi hiển thị thành ẩn
+    commentBox.style.display = 'none';
+  }
+});
     </script>
 </body>
 

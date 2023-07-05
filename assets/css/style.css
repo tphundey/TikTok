@@ -1,18 +1,71 @@
 body {
-    background-color: black;
+    background-color: white;
 }
 
 .container {
-    width: auto;
-    height: auto;
-    background-color: aqua;
+    max-width: 1000px;
+    max-height: 900px;
+    padding: 0px;
+    margin: 0px auto;
+    background-color: black;
 }
 
-ul {
-    color: white;
+.logo {
+    width: 100px;
+    padding: 10px;
+}
+
+.vid {
+    max-width: 400px;
+    padding: 0px;
+    margin: 0px auto;
 }
 
 video {
-    width: 300px;
+    max-width: 300px;
+    max-height: 500px;
     padding: 50px;
+}
+
+.option {
+    position: relative;
+    top: -350px;
+    left: 280px;
+    display: grid;
+    gap: 20px;
+    width: 50px;
+    opacity: 0.7;
+}
+
+.option2 {
+    position: relative;
+    top: -320px;
+    left: 280px;
+    display: grid;
+    gap: 15px;
+    width: 50px;
+}
+
+.comment {
+    color: black;
+    background-color: white;
+    max-width: 280px;
+   height: 500px;
+    position: relative;
+    top: -200px;
+    left: 50px;
+}
+
+.comment ul li {
+    list-style-type: none;
+}
+
+i {
+    color: white;
+    font-size: 20px;
+}
+
+button {
+    background: none;
+    border: none;
 }
