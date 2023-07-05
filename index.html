@@ -41,7 +41,7 @@
 
         // Lấy dữ liệu từ API
         function fetchVideoData() {
-            axios.get('http://localhost:3000/videos')
+            axios.get('https://video-data.vercel.app/videos')
                 .then(response => {
                     // Gán danh sách video từ API vào biến videoList
                     videoList = response.data;
@@ -63,7 +63,7 @@
 
         // Lấy danh sách bình luận từ API
         function fetchComments(commentIds) {
-            axios.get('http://localhost:3000/comments')
+            axios.get('https://video-data.vercel.app/comments')
                 .then(response => {
                     const comments = response.data;
                     const videoComments = commentIds.map(commentId => comments.find(comment => comment.id === commentId));
@@ -86,7 +86,7 @@
 
         // Gửi bình luận mới
         function postComment(videoId, commentText) {
-            axios.post('http://localhost:3000/comments', { text: commentText })
+            axios.post('https://video-data.vercel.app/comments', { text: commentText })
                 .then(response => {
                     const newComment = response.data;
                     const video = videoList[currentVideoIndex];
@@ -95,7 +95,7 @@
                     commentInput.value = '';
 
                     // Cập nhật bảng videos trên API server
-                    axios.put(`http://localhost:3000/videos/${videoId}`, video)
+                    axios.put(`https://video-data.vercel.app/videos/${videoId}`, video)
                         .then(response => {
                             console.log('Video updated:', response.data);
                         })
