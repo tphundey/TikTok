@@ -165,6 +165,10 @@ button {
     display: flex;
 }
 
+#commentForm  button{
+    color: gray;
+}
+
 input {
     padding: 10px;
     background-color: #F1F1F2;
@@ -189,3 +193,4 @@ input {
     gap: 20px;
     grid-template-columns: repeat(7, minmax(0, 1fr));
 }
+

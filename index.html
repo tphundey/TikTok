@@ -59,15 +59,17 @@
                             <img src="./assets/img/logo.png" alt="">
                         </div>
                         <form id="commentForm">
-                            <input type="text" id="inputField" placeholder="Add comment...">
-                            <div class="icon"><i class="fa-regular fa-face-smile" id="iconButton"></i></div>
-                            <button id="iconButton" type="submit">Submit</button>
+                            <input type="text" id="commentInput" placeholder="Add comment...">
+                            <div class="icon">
+                                <i title="Tìm kiếm" class="fa-regular fa-face-smile" id="iconButton"></i>
+                            </div>
+                            <button id="submitButton" type="submit">Post</button>
                         </form>
 
                     </div>
                     <div class="icon-list" id="iconList">
                         <i>😀</i>
-                        <i>😄</i>
+                       <i>😄</i>
                         <i>😁</i>
                         <i>😆</i>
                         <i>😅</i>
@@ -94,21 +96,21 @@
     <!-- xử lý logic -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-         $(document).ready(function() {
-      $("#iconButton").click(function() {
-        $("#iconList").toggle();
-      });
+        $(document).ready(function () {
+            $("#iconButton").click(function () {
+                $("#iconList").toggle();
+            });
 
-      $(".icon-list i").click(function() {
-        var emoji = $(this).text();
-        $("#inputField").val($("#inputField").val() + emoji + " ");
-        $("#iconList").hide();
-      });
-    });
+            $(".icon-list i").click(function () {
+                var emoji = $(this).text();
+                $("#commentInput").val($("#commentInput").val() + emoji + " ");
+                $("#iconList").hide();
+            });
+        });
 
-    $(window).on('load', function() {
-      $("#iconList").hide();
-    });
+        $(window).on('load', function () {
+            $("#iconList").hide();
+        });
     </script>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -174,7 +176,7 @@
             axios.post('http://localhost:3000/comments', { text: commentText })
                 .then(response => {
                     const newComment = response.data;
-                    const video = videoList[currentVideoIndex];
+                   const video = videoList[currentVideoIndex];
                     video.comments.push(newComment.id); // Thêm ID bình luận vào mảng comments của video hiện tại
                     fetchComments(video.comments);
                     commentInput.value = '';
@@ -240,24 +242,6 @@
 
         // Lấy dữ liệu video khi trang tải xong
         window.addEventListener('DOMContentLoaded', fetchVideoData);
-
-
-
-
-        const commentButton = document.getElementById('commentButton');
-        const commentBox = document.getElementById('commentBox');
-
-        // Đăng ký sự kiện nhấp vào nút comment
-        commentButton.addEventListener('click', function () {
-            // Kiểm tra trạng thái hiển thị của bảng comment
-            if (commentBox.style.display === 'none') {
-                // Nếu đang ẩn, thay đổi hiển thị thành hiển thị
-                commentBox.style.display = 'block';
-            } else {
-                // Nếu đang hiển thị, thay đổi hiển thị thành ẩn
-                commentBox.style.display = 'none';
-            }
-        });
     </script>
 </body>
 
