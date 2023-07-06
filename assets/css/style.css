@@ -76,23 +76,28 @@ button {
 }
 
 .hr {
-    margin-top: 20px;
-    margin-bottom: 10px;
+
     width: 100%;
-    height: 2px;
+    height: 0.5px;
     background-color: gainsboro;
 }
 
 .avt {
     display: flex;
+    align-items: center;
     padding: 10px;
     gap: 20px;
     background-color: white;
 }
 
 .avt img {
-    width: 50px;
+    width: 40px;
     border-radius: 100px;
+}
+
+.profile {
+    display: grid;
+    gap: 2px;
 }
 
 .name {
@@ -102,39 +107,85 @@ button {
 
 .username {
     font-size: 14px;
+    color: gray;
 }
 
 .fl {
-    color: tomato;
-    font-weight: 600;
-    height: 17px;
-    font-size: 13px;
-    padding: 5px 10px;
-    border: 1px solid tomato;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.fl:hover {
-    font-weight: 600;
-    background-color: tomato;
     color: white;
+    font-weight: 600;
+    background-color: #DF274B;
+    border-radius: 5px;
     height: 17px;
     font-size: 13px;
-    padding: 5px 10px;
+    padding: 5px 20px;
     border: 1px solid tomato;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .des,
 .music {
     padding: 10px;
     font-size: 13px;
-    font-weight: 600;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .music i {
     color: black;
     font-size: 12px;
     margin-right: 10px;
+}
+
+.countCmt {
+    font-weight: 600;
+    font-size: 13px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.containercmt {
+    position: relative;
+    margin-left: 10px;
+}
+
+.containercmt i {
+    color: black;
+}
+
+.avtcmt img {
+    width: 40px;
+    border-radius: 100px;
+}
+
+.flcmt {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#commentForm {
+    display: flex;
+}
+
+input {
+    padding: 10px;
+    background-color: #F1F1F2;
+    border: 1px solid #d6e5ea;
+    border-radius: 3px;
+}
+
+.icon {
+    position: relative;
+    left: -29px;
+    top: 9px;
+}
+
+.icon-list {
+    position: absolute;
+    top: -100px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
 }

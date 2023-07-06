@@ -7,6 +7,7 @@
     <title>Tiktok</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="assets/img/tiktok.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://kit.fontawesome.com/d829d3809c.js" crossorigin="anonymous"></script>
 </head>
 
@@ -41,21 +42,48 @@
                         Follow
                     </div>
                 </div>
+                <div class="hr"></div>
                 <div class="des">
-                    Đạp xe <span style="color: darkblue;">#kimyen07022004</span>
+                    Đạp xe <span style="color: #2B5DB9;">#kimyen07022004</span>
                 </div>
                 <div class="music">
-                    <i class="fa-solid fa-music"></i> 没有理由-Cover-永彬RyanB
+                    <i class="fa-solid fa-music"></i>nhạc nền - <b>没有理由-Cover-永彬RyanB</b>
                 </div>
 
 
+                <!-- phần comment -->
+                <div class="containercmt">
+                    <p class="countCmt">350 comments</p>
+                    <div class="flcmt">
+                        <div class="avtcmt">
+                            <img src="./assets/img/logo.png" alt="">
+                        </div>
+                        <form id="commentForm">
+                            <input type="text" id="inputField" placeholder="Add comment...">
+                            <div class="icon"><i class="fa-regular fa-face-smile" id="iconButton"></i></div>
+                            <button id="iconButton" type="submit">Submit</button>
+                        </form>
 
-    
-                <ul id="commentsContainer"></ul>
-                <form id="commentForm">
-                    <input type="text" id="commentInput" placeholder="Enter your comment">
-                    <button type="submit">Submit</button>
-                </form>
+                    </div>
+                    <div class="icon-list" id="iconList">
+                        <i>😀</i>
+                        <i>😄</i>
+                        <i>😁</i>
+                        <i>😆</i>
+                        <i>😅</i>
+                        <i>🤣</i>
+                        <i>😂</i>
+                        <i>🙂</i>
+                        <i>🙃</i>
+                        <i>🫠</i>
+                        <i>😉</i>
+                        <i>😊</i>
+                        <i>😇</i>
+                    </div><br>
+                    <div class="hr"></div>
+                    <ul id="commentsContainer"></ul>
+                </div>
+                <!--end phần comment -->
             </div>
         </div>
     </div>
@@ -64,7 +92,24 @@
 
 
     <!-- xử lý logic -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+         $(document).ready(function() {
+      $("#iconButton").click(function() {
+        $("#iconList").toggle();
+      });
 
+      $(".icon-list i").click(function() {
+        var emoji = $(this).text();
+        $("#inputField").val($("#inputField").val() + emoji + " ");
+        $("#iconList").hide();
+      });
+    });
+
+    $(window).on('load', function() {
+      $("#iconList").hide();
+    });
+    </script>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -81,7 +126,7 @@
 
         // Lấy dữ liệu từ API
         function fetchVideoData() {
-            axios.get('https://video-data.vercel.app/videos')
+            axios.get('http://localhost:3000/videos')
                 .then(response => {
                     // Gán danh sách video từ API vào biến videoList
                     videoList = response.data;
@@ -103,7 +148,7 @@
 
         // Lấy danh sách bình luận từ API
         function fetchComments(commentIds) {
-            axios.get('https://video-data.vercel.app/comments')
+            axios.get('http://localhost:3000/comments')
                 .then(response => {
                     const comments = response.data;
                     const videoComments = commentIds.map(commentId => comments.find(comment => comment.id === commentId));
@@ -126,7 +171,7 @@
 
         // Gửi bình luận mới
         function postComment(videoId, commentText) {
-            axios.post('https://video-data.vercel.app/comments', { text: commentText })
+            axios.post('http://localhost:3000/comments', { text: commentText })
                 .then(response => {
                     const newComment = response.data;
                     const video = videoList[currentVideoIndex];
@@ -135,7 +180,7 @@
                     commentInput.value = '';
 
                     // Cập nhật bảng videos trên API server
-                    axios.put(`https://video-data.vercel.app/videos/${videoId}`, video)
+                    axios.put(`http://localhost:3000/videos/${videoId}`, video)
                         .then(response => {
                             console.log('Video updated:', response.data);
                         })
