@@ -22,10 +22,14 @@
                 <button id="nextButton"><i class="fa-solid fa-down-long"></i></button>
             </div>
             <div class="option2">
-                <button><i class="fa-solid fa-heart"></i></button>
+                <button class="heart-button"><i class="fa-solid fa-heart"></i></button>
                 <button class="cmt"><i class="fa-regular fa-comment-dots"></i></button>
                 <button><i class="fa-solid fa-share-nodes"></i></button>
-
+            </div>
+            <div class="option3">
+                <button class="couttim chiso" style="color: white;"></button>
+                <span class="countCmt2 chiso" style="color: white;"></span>
+                <span class="countShares chiso" style="color: white;"></span>
             </div>
             <div class="comment">
                 <div class="hr"></div>
@@ -122,6 +126,7 @@
         const commentInput = document.getElementById('commentInput');
         const commentsContainer = document.getElementById('commentsContainer');
         const countCmt = document.querySelector('.countCmt');
+        const countCmt2 = document.querySelector('.countCmt2');
         // Khởi tạo biến lưu trữ danh sách video
         let videoList = [];
 
@@ -140,6 +145,15 @@
                 });
         }
 
+        // hiệu ứng trái tim
+        const heartButton = document.querySelector('.heart-button');
+        let isClicked = false;
+
+        heartButton.addEventListener('click', function () {
+            isClicked = !isClicked;
+            heartButton.querySelector('i').classList.toggle('clicked', isClicked);
+        });
+
         // Hiển thị video
         function showVideo(index) {
             const video = videoList[index];
@@ -152,7 +166,6 @@
         function fillData(video) {
             document.getElementById('videoPlayer').src = video.url;
 
-            // Tìm các phần tử dựa trên class name và gán giá trị từ bảng JSON
             const nameElements = document.getElementsByClassName('name');
             for (let i = 0; i < nameElements.length; i++) {
                 nameElements[i].innerText = video.name;
@@ -174,10 +187,19 @@
             }
 
             const avtElements = document.getElementsByClassName('avturl');
-  for (let i = 0; i < avtElements.length; i++) {
-    const img = avtElements[i];
-    img.src = video.avturl; // Lấy đường dẫn ảnh từ trường avturl của dữ liệu video
-  }
+            for (let i = 0; i < avtElements.length; i++) {
+                const img = avtElements[i];
+                img.src = video.avturl;
+            }
+
+            const likeCountElement = document.querySelector('.couttim');
+            likeCountElement.innerText = video.likes;
+
+            const commentCountElement = document.querySelector('.countCmt2');
+            commentCountElement.innerText = video.comments.length;
+
+            const shareCountElement = document.querySelector('.countShares');
+            shareCountElement.innerText = video.shares;
         }
         // Lấy danh sách bình luận từ API
         function fetchComments(commentIds) {
@@ -221,6 +243,14 @@
                 liTime.innerText = `${comment.time}`;
                 liTime.classList.add('timecmt')
 
+                const like = document.createElement('li');
+                like.innerText = `${comment.likes}`;
+                like.classList.add('like')
+
+                const share = document.createElement('li');
+                share.innerText = `${comment.shares}`;
+                share.classList.add('share')
+
                 infoDiv.appendChild(liName);
                 infoDiv.appendChild(liText);
                 infoDiv.appendChild(liTime);
@@ -230,6 +260,7 @@
                 commentsContainer.appendChild(div);
             }
             countCmt.textContent = comments.length + ' comment' + (comments.length !== 1 ? 's' : ''); // Hiển thị số lượng bình luận
+
         }
 
         function getAvatarUrl(userId) {
