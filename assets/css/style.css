@@ -68,7 +68,6 @@ video {
 .comment {
     color: black;
     background-color: white;
-    max-width: 280px;
     height: 300px;
     position: relative;
     top: -180px;
