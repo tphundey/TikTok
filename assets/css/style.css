@@ -165,7 +165,7 @@ button {
     display: flex;
 }
 
-#commentForm  button{
+#commentForm button {
     color: gray;
 }
 
@@ -194,3 +194,89 @@ input {
     grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
+.cmtdown {
+    display: flex;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.cmtdown img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+}
+
+.usercmt {
+    display: flex;
+    gap: 20px;
+}
+
+.nameuserr {
+    font-size: 18px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+}
+
+.noidung {
+    font-size: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.thongtincmt {
+    font-size: 13px;
+    color: gray;
+    margin-top: 10px;
+}
+
+.cmtdown-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    /* Thay đổi số lượng cột tùy ý */
+    grid-gap: 10px;
+    /* Khoảng cách giữa các phần tử */
+}
+
+.comment-container {
+    background-color: #DF274B;
+}
+
+.comment-wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    list-style-type: none;
+    gap: 14px;
+}
+
+.usercmt {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.textcmt {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 3px;
+}
+
+.timecmt {
+    font-size: 12px;
+    margin-top: 5px;
+    color: gray;
+}
+
+.nhacnen i {
+    color: black;
+    font-size: 10px;
+    margin-right: 2px;
+}
+
+.nhacnen {
+    height: 15px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+.nhacnen p{
+    font-size: 9px;
+}

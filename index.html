@@ -31,12 +31,11 @@
                 <div class="hr"></div>
                 <div class="avt">
                     <div>
-                        <img src="./assets/img/logo.png" alt="">
+                        <img class="avturl" src="" alt="">
                     </div>
                     <div class="profile">
-                        <div class="name">
-                            yenkim0702</div>
-                        <div class="username">Thor</div>
+                        <div class="name"></div>
+                        <div class="username"></div>
                     </div>
                     <div class="fl">
                         Follow
@@ -44,16 +43,16 @@
                 </div>
                 <div class="hr"></div>
                 <div class="des">
-                    Đạp xe <span style="color: #2B5DB9;">#kimyen07022004</span>
                 </div>
-                <div class="music">
-                    <i class="fa-solid fa-music"></i>nhạc nền - <b>没有理由-Cover-永彬RyanB</b>
+                <div class="nhacnen">
+                    <i class="fa-solid fa-music"></i>
+                    <p class="music"></p>
                 </div>
 
 
                 <!-- phần comment -->
                 <div class="containercmt">
-                    <p class="countCmt">350 comments</p>
+                    <p class="countCmt"></p>
                     <div class="flcmt">
                         <div class="avtcmt">
                             <img src="./assets/img/logo.png" alt="">
@@ -69,7 +68,7 @@
                     </div>
                     <div class="icon-list" id="iconList">
                         <i>😀</i>
-                       <i>😄</i>
+                        <i>😄</i>
                         <i>😁</i>
                         <i>😆</i>
                         <i>😅</i>
@@ -83,7 +82,7 @@
                         <i>😇</i>
                     </div><br>
                     <div class="hr"></div>
-                    <ul id="commentsContainer"></ul>
+                    <div class="cmtdown cmtdown-grid" id="commentsContainer"></div>
                 </div>
                 <!--end phần comment -->
             </div>
@@ -122,7 +121,7 @@
         const commentForm = document.getElementById('commentForm');
         const commentInput = document.getElementById('commentInput');
         const commentsContainer = document.getElementById('commentsContainer');
-
+        const countCmt = document.querySelector('.countCmt');
         // Khởi tạo biến lưu trữ danh sách video
         let videoList = [];
 
@@ -134,6 +133,7 @@
                     videoList = response.data;
                     showVideo(0);
                     fetchComments(videoList[0].comments);
+                    fillData(videoList[0]); // Gọi hàm fillData để hiển thị dữ liệu video
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -146,14 +146,45 @@
             videoPlayer.src = video.url;
             currentVideoIndex = index;
             fetchComments(video.comments);
+            fillData(video); // Gọi hàm fillData để hiển thị dữ liệu video
         }
 
+        function fillData(video) {
+            document.getElementById('videoPlayer').src = video.url;
+
+            // Tìm các phần tử dựa trên class name và gán giá trị từ bảng JSON
+            const nameElements = document.getElementsByClassName('name');
+            for (let i = 0; i < nameElements.length; i++) {
+                nameElements[i].innerText = video.name;
+            }
+
+            const usernameElements = document.getElementsByClassName('username');
+            for (let i = 0; i < usernameElements.length; i++) {
+                usernameElements[i].innerText = video.username;
+            }
+
+            const desElements = document.getElementsByClassName('des');
+            for (let i = 0; i < desElements.length; i++) {
+                desElements[i].innerHTML = video.des;
+            }
+
+            const musicElements = document.getElementsByClassName('music');
+            for (let i = 0; i < musicElements.length; i++) {
+                musicElements[i].innerHTML = video.music;
+            }
+
+            const avtElements = document.getElementsByClassName('avturl');
+  for (let i = 0; i < avtElements.length; i++) {
+    const img = avtElements[i];
+    img.src = video.avturl; // Lấy đường dẫn ảnh từ trường avturl của dữ liệu video
+  }
+        }
         // Lấy danh sách bình luận từ API
         function fetchComments(commentIds) {
             axios.get('http://localhost:3000/comments')
                 .then(response => {
                     const comments = response.data;
-                    const videoComments = commentIds.map(commentId => comments.find(comment => comment.id === commentId));
+                    const videoComments = comments.filter(comment => commentIds.includes(comment.id));
                     displayComments(videoComments);
                 })
                 .catch(error => {
@@ -161,30 +192,67 @@
                 });
         }
 
-        // Hiển thị danh sách bình luận
+
         function displayComments(comments) {
             commentsContainer.innerHTML = '';
-            comments.forEach(comment => {
-                const li = document.createElement('li');
-                li.innerText = comment.text;
-                commentsContainer.appendChild(li);
-            });
+
+            for (let i = 0; i < comments.length; i++) {
+                const comment = comments[i];
+
+                const div = document.createElement('div');
+                div.classList.add('comment-wrapper'); // Thêm class tùy chỉnh cho thẻ <div> (nếu cần)
+
+                const avatar = document.createElement('img');
+                avatar.src = getAvatarUrl(comment.userId); // Lấy đường dẫn ảnh từ dữ liệu video
+                avatar.classList.add('avatar');
+
+                const infoDiv = document.createElement('div');
+                infoDiv.classList.add('comment-info'); // Thêm class tùy chỉnh cho phần thông tin (nếu cần)
+
+                const liName = document.createElement('li');
+                liName.innerText = `${comment.user}`;
+                liName.classList.add('usercmt')
+
+                const liText = document.createElement('li');
+                liText.innerText = `${comment.text}`;
+                liText.classList.add('textcmt')
+
+                const liTime = document.createElement('li');
+                liTime.innerText = `${comment.time}`;
+                liTime.classList.add('timecmt')
+
+                infoDiv.appendChild(liName);
+                infoDiv.appendChild(liText);
+                infoDiv.appendChild(liTime);
+
+                div.appendChild(avatar);
+                div.appendChild(infoDiv);
+                commentsContainer.appendChild(div);
+            }
+            countCmt.textContent = comments.length + ' comment' + (comments.length !== 1 ? 's' : ''); // Hiển thị số lượng bình luận
         }
 
+        function getAvatarUrl(userId) {
+            const video = videoList.find(video => video.id === userId);
+            if (video) {
+                return video.avturl; // Lấy đường dẫn ảnh từ trường avturl của dữ liệu video
+            }
+            return './assets/img/logo.png';
+        }
         // Gửi bình luận mới
         function postComment(videoId, commentText) {
             axios.post('http://localhost:3000/comments', { text: commentText })
                 .then(response => {
                     const newComment = response.data;
-                   const video = videoList[currentVideoIndex];
+                    const video = videoList[currentVideoIndex];
                     video.comments.push(newComment.id); // Thêm ID bình luận vào mảng comments của video hiện tại
-                    fetchComments(video.comments);
                     commentInput.value = '';
-
+                    countCmt.textContent = video.comments.length + ' comment' + (video.comments.length !== 1 ? 's' : ''); // Hiển thị số lượng bình luận
                     // Cập nhật bảng videos trên API server
                     axios.put(`http://localhost:3000/videos/${videoId}`, video)
                         .then(response => {
                             console.log('Video updated:', response.data);
+                            fetchComments(video.comments); // Gọi lại fetchComments để cập nhật danh sách bình luận
                         })
                         .catch(error => {
                             console.error('Error:', error);

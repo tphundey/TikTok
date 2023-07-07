@@ -2,17 +2,19 @@
   "videos": [
     {
       "id": 1,
+      "name": "yenkim0703",
+      "username": "thor",
+      "avturl": "./assets/img/daidien.png",
+      "des": "quay tóp tóp giật giật",
+      "music": "没有理由-Cover-永彬RyanB",
       "title": "Video 1",
       "url": "./assets/Download (1).mp4",
       "likes": 1,
       "shares": 0,
       "comments": [
-        1,
-        2,
         3,
         4,
-        5,
-        6
+        5
       ]
     },
     {
@@ -21,18 +23,25 @@
       "url": "./assets/Download.mp4",
       "likes": 3,
       "shares": 2,
-      "comments": [
-        3,
-        4,
-        7,
-        8
-      ]
+      "comments": []
     }
   ],
   "comments": [
     {
-      "text": "hello",
-      "id": 1
+      "user": "Dĩnh tu tiên",
+      "text": "cháy quá đi mất !",
+      "id": 3,
+      "time": "3-29"
+    },
+    {
+      "user": "Dĩnh tu tiên",
+      "text": "d",
+      "id": 4,
+      "time": "3-29"
+    },
+    {
+      "text": "😅 🤣",
+      "id": 5
     }
   ],
   "likes": [
