@@ -20,7 +20,8 @@
     <!-- thông tin user -->
     <div class="container">
         <div class="vid">
-            <video crossorigin="use-credentials" preload="" playsinline controls id="videoPlayer" src=""></video>
+            <video crossorigin="use-credentials" preload="" playsinline controls autoplay id="videoPlayer"
+                src=""></video>
             <div class="option3">
                 <button class="couttim chiso" style="color: white;"></button>
                 <span class="countCmt2 chiso" style="color: white;"></span>
@@ -101,92 +102,73 @@
         </div>
     </div>
 
-
     <script>
         // Lấy phần tử .fl
         const followButton = document.querySelector('.fl');
-        
+
         // Lấy id video từ thuộc tính data-video-id
         const videoId = followButton.dataset.videoId;
-        
+
         // Lấy tất cả các name đã được lưu trong local storage
         let savedNames = JSON.parse(localStorage.getItem('savedNames')) || [];
-        
-        // Kiểm tra xem videoId đã được lưu hay chưa
-        const isFollowed = savedNames.includes(videoId);
-        
+
+        // Kiểm tra xem class 'name' đã tồn tại trong mảng savedNames hay không
+        const isFollowed = savedNames.includes(getCurrentName());
+
         // Cập nhật trạng thái ban đầu của nút follow
         updateFollowButtonState(isFollowed);
-        
+
         // Thêm sự kiện click cho nút follow
-        followButton.addEventListener('click', function() {
-            // Kiểm tra class 'name' đã thay đổi hay chưa
-            const nameElement = document.querySelector('.name');
-            const name = nameElement.textContent.trim();
-            
-            if (!savedNames.includes(name)) {
-                // Lưu name vào mảng savedNames
-                savedNames.push(name);
-                
+        followButton.addEventListener('click', function () {
+            const currentName = getCurrentName();
+            const index = savedNames.indexOf(currentName);
+
+            if (index === -1) {
+                // Thêm name vào mảng savedNames
+                savedNames.push(currentName);
+
                 // Cập nhật trạng thái nút follow
                 updateFollowButtonState(true);
-                
-                // Lưu mảng savedNames vào local storage
-                localStorage.setItem('savedNames', JSON.stringify(savedNames));
-                
-                // Thực hiện hành động follow
-                followAction(videoId);
             } else {
-                // Hủy follow nếu name đã tồn tại trong mảng savedNames
-                const index = savedNames.indexOf(name);
-                
-                if (index !== -1) {
-                    savedNames.splice(index, 1);
-                    
-                    // Cập nhật trạng thái nút follow
-                    updateFollowButtonState(false);
-                    
-                    // Lưu mảng savedNames vào local storage
-                    localStorage.setItem('savedNames', JSON.stringify(savedNames));
-                    
-                    // Thực hiện hành động unfollow
-                    unfollowAction(videoId);
-                }
+                // Xóa name khỏi mảng savedNames
+                savedNames.splice(index, 1);
+
+                // Cập nhật trạng thái nút follow
+                updateFollowButtonState(false);
             }
+
+            // Lưu mảng savedNames vào local storage
+            localStorage.setItem('savedNames', JSON.stringify(savedNames));
         });
-        
+
         // Hàm cập nhật trạng thái nút follow
         function updateFollowButtonState(isFollowed) {
             if (isFollowed) {
                 followButton.textContent = 'Unfollow';
+                followButton.classList.add('unfollow');
             } else {
                 followButton.textContent = 'Follow';
+                followButton.classList.remove('unfollow');
             }
         }
-        
-        // Hàm thực hiện hành động follow
-        function followAction(videoId) {
-            // TODO: Thực hiện hành động follow
-            console.log('Follow video', videoId);
-        }
-        
-        // Hàm thực hiện hành động unfollow
-        function unfollowAction(videoId) {
-            // TODO: Thực hiện hành động unfollow
-            console.log('Unfollow video', videoId);
-        }
-        
-        // Kiểm tra và khôi phục trạng thái follow sau khi reload lại trang
-        window.addEventListener('load', function() {
-            const nameElement = document.querySelector('.name');
-            const name = nameElement.textContent.trim();
-            
-            if (savedNames.includes(name)) {
-                updateFollowButtonState(true);
-            }
-        });
-    </script>
 
+        // Hàm lấy giá trị của class 'name'
+        function getCurrentName() {
+            const nameElement = document.querySelector('.name');
+            return nameElement.textContent.trim();
+        }
+
+        // Lắng nghe sự kiện "timeupdate" của video
+        const videoElement = document.getElementById('videoPlayer');
+        videoElement.addEventListener('timeupdate', handleVideoTimeUpdate);
+
+        // Hàm xử lý sự kiện "timeupdate" của video
+        function handleVideoTimeUpdate() {
+            const currentName = getCurrentName();
+            const isFollowed = savedNames.includes(currentName);
+            updateFollowButtonState(isFollowed);
+        }
+    </script>
     <script>
         // Lấy thông tin người dùng từ localStorage
         const user = JSON.parse(localStorage.getItem('user'));
@@ -220,7 +202,8 @@
                     };
 
                     // Gửi bình luận mới lên cơ sở dữ liệu
-                    axios.post('http://localhost:3000/comments', newComment)
+                    axios.post('https://video-data.vercel.app/comments')
+                        // axios.post('http://localhost:3000/comments', newComment)
                         .then(response => {
                             // Xử lý khi bình luận được gửi thành công
                             console.log('Comment posted:', response.data);
@@ -275,8 +258,8 @@
 
         // Lấy dữ liệu từ API
         function fetchVideoData() {
-            axios.get('http://localhost:3000/videos')
-                // axios.get('https://video-data.vercel.app/videos')
+            //   axios.get('http://localhost:3000/videos')
+            axios.get('https://video-data.vercel.app/videos')
                 .then(response => {
                     // Gán danh sách video từ API vào biến videoList
                     videoList = response.data;
@@ -347,8 +330,8 @@
         }
         // Lấy danh sách bình luận từ API
         function fetchComments(commentIds) {
-            axios.get('http://localhost:3000/comments')
-                // axios.get('https://video-data.vercel.app/comments')
+            // axios.get('http://localhost:3000/comments')
+            axios.get('https://video-data.vercel.app/comments')
                 .then(response => {
                     const comments = response.data;
                     const videoComments = comments.filter(comment => commentIds.includes(comment.id));
@@ -424,8 +407,8 @@
             const currentDate = new Date().toLocaleDateString(); // Lấy ngày hiện tại
 
             axios
-                .post('http://localhost:3000/comments', { text: commentText, name: storedName, avturl: storedAvturl, date: currentDate })
-                // axios.post('https://video-data.vercel.app/comments', { text: commentText })
+            // .post('http://localhost:3000/comments', { text: commentText, name: storedName, avturl: storedAvturl, date: currentDate })
+            axios.post('https://video-data.vercel.app/comments', { text: commentText })
                 .then(response => {
                     const newComment = response.data;
                     const video = videoList[currentVideoIndex];
@@ -435,8 +418,8 @@
                         video.comments.length + ' comment' + (video.comments.length !== 1 ? 's' : ''); // Hiển thị số lượng bình luận
                     // Cập nhật bảng videos trên API server
                     axios
-                        .put(`http://localhost:3000/videos/${videoId}`, video)
-                        // axios.put(`https://video-data.vercel.app/videos/${videoId}`, video)
+                    // .put(`http://localhost:3000/videos/${videoId}`, video)
+                    axios.put(`https://video-data.vercel.app/videos/${videoId}`, video)
                         .then(response => {
                             console.log('Video updated:', response.data);
                             fetchComments(video.comments); // Gọi lại fetchComments để cập nhật danh sách bình luận

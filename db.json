@@ -15,7 +15,9 @@
         1,
         2,
         3,
-        5
+        5,
+        6,
+        7
       ]
     },
     {
@@ -160,6 +162,20 @@
       "avturl": "./assets/img/1.png",
       "date": "7/8/2023",
       "id": 5
+    },
+    {
+      "text": "😊  test",
+      "name": "Mai Thu Thủy",
+      "avturl": "./assets/img/1.png",
+      "date": "7/8/2023",
+      "id": 6
+    },
+    {
+      "text": "😊 😇",
+      "name": "Mai Thu Thủy",
+      "avturl": "./assets/img/1.png",
+      "date": "7/8/2023",
+      "id": 7
     }
   ],
   "likes": [

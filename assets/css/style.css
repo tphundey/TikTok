@@ -353,3 +353,10 @@ input {
     color: red;
     animation: pulse 0.6s;
 }
+
+
+.fl.unfollow {
+    background-color: gray;
+    /* Màu sắc cho nút Unfollow */
+    border: 1px solid gray;
+}
