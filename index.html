@@ -1,527 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiktok</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="assets/img/tiktok.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <script src="https://kit.fontawesome.com/d829d3809c.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        
+/*======================
+    404 page
+=======================*/
+
+
+.page_404{ padding:40px 0; background:#fff; font-family: 'Arvo', serif;
+}
+
+.page_404  img{ width:100%;}
+
+.four_zero_four_bg{
+ 
+ background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+ }
+ 
+ 
+ .four_zero_four_bg h1{
+ font-size:80px;
+ }
+ 
+  .four_zero_four_bg h3{
+			 font-size:80px;
+			 }
+			 
+			 .link_404{			 
+	color: #fff!important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;}
+	.contant_box_404{ margin-top:-50px;}
+    </style>
 </head>
-
 <body>
-    <!-- phần logo -->
-    <img class="logo" src="./assets/img/TikTok_logo.svg.png" alt="">
-    <!--end phần logo -->
-
-
-    <!-- thông tin user -->
-    <div class="container">
-        <div class="vid">
-            <video crossorigin="use-credentials" preload="" playsinline controls id="videoPlayer" src=""></video>
-            <div class="option3">
-                <button class="couttim chiso" style="color: white;"></button>
-                <span class="countCmt2 chiso" style="color: white;"></span>
-                <span class="countShares chiso" style="color: white;"></span>
+    <section class="page_404">
+        <div class="container">
+            <div class="row">	
+            <div class="col-sm-12 ">
+            <div class="col-sm-10 col-sm-offset-1  text-center">
+            <div class="four_zero_four_bg">
+                <h1 class="text-center ">404</h1>
+            
+            
             </div>
-            <div class="option">
-                <button id="previousButton"><i class="fa-solid fa-up-long"></i></button>
-                <button id="nextButton"><i class="fa-solid fa-down-long"></i></button>
+            
+            <div class="contant_box_404">
+            <h3 class="h2">
+            Look like you're lost
+            </h3>
+            
+            <p>the page you are looking for not avaible!</p>
+            
+            <a href="" class="link_404">Go to Home</a>
+        </div>
             </div>
-            <div class="option2">
-                <button class="heart-button"><i class="fa-solid fa-heart"></i></button>
-                <button class="cmt"><i class="fa-regular fa-comment-dots"></i></button>
-                <button><i class="fa-solid fa-share-nodes"></i></button>
             </div>
-
-            <div class="comment">
-                <div class="hr"></div>
-                <div class="avt">
-                    <div>
-                        <img class="avturl" src="" alt="">
-                    </div>
-                    <div style="width: 70%;" class="profile">
-                        <div class="name"></div>
-                        <div class="username"></div>
-                    </div>
-                    <!-- Thêm thuộc tính data-video-id vào phần tử .fl -->
-                    <div style="width: 30%;" class="fl" data-video-id="1">
-                        Follow
-                    </div>
-                </div>
-                <div class="hr"></div>
-                <div class="des">
-                </div>
-                <div class="nhacnen">
-                    <i class="fa-solid fa-music"></i>
-                    <p class="music fz"></p>
-                </div>
-                <!--end thông tin user -->
-
-                <!-- phần comment -->
-                <div class="containercmt">
-                    <p class="countCmt"></p>
-                    <div class="flcmt">
-                        <div class="avtcmt">
-                            <img src="./assets/img/logo.png" alt="">
-                        </div>
-                        <form id="commentForm">
-
-                            <input type="text" id="commentInput" placeholder="Add comment...">
-                            <div class="icon">
-                                <i title="Tìm kiếm" class="fa-regular fa-face-smile" id="iconButton"></i>
-                            </div>
-                            <button id="submitButton" type="submit">Post</button>
-                        </form>
-
-                    </div>
-                    <div class="icon-list" id="iconList">
-                        <i>😀</i>
-                        <i>😄</i>
-                        <i>😁</i>
-                        <i>😆</i>
-                        <i>😅</i>
-                        <i>🤣</i>
-                        <i>😂</i>
-                        <i>🙂</i>
-                        <i>🙃</i>
-                        <i>🫠</i>
-                        <i>😉</i>
-                        <i>😊</i>
-                        <i>😇</i>
-                    </div><br>
-                    <div class="hr"></div>
-                    <div class="cmtdown cmtdown-grid" id="commentsContainer"></div>
-                    <button style="background-color: brown;">Logout</button>
-                </div>
-                <!--end phần comment -->
             </div>
         </div>
-    </div>
-
-
-    <script>
-        function fetchVideoData() {
-            axios
-                .get('http://localhost:3000/videos')
-                .then(response => {
-                    videoList = response.data;
-                    showVideo(0);
-                    fetchComments(videoList[0].comments);
-                    fillData(videoList[0]);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        function handleFollowClick(event) {
-            // Lấy videoId từ lớp CSS của phần tử .fl
-            const followButton = event.target;
-            const videoId = followButton.getAttribute('data-video-id');
-            const isFollowing = isVideoFollowing(videoId);
-
-            if (isFollowing) {
-                unfollowVideo(videoId);
-                followButton.style.backgroundColor = 'brown'; // Đặt lại màu sắc cho Unfollow
-            } else {
-                followVideo(videoId);
-                followButton.style.backgroundColor = 'green'; // Đặt lại màu sắc cho Follow
-            }
-        }
-
-        // Hàm kiểm tra trạng thái Follow của video
-        function isVideoFollowing(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            return followedVideos[videoId] === true;
-        }
-
-        // Hàm thực hiện Follow video
-        function followVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            followedVideos[videoId] = true;
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        // Hàm hủy Follow video
-        function unfollowVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            delete followedVideos[videoId];
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        // Kiểm tra và áp dụng màu sắc ban đầu cho các nút "Follow"
-        const followButtons = document.querySelectorAll('.fl');
-        followButtons.forEach((followButton) => {
-            followButton.addEventListener('click', handleFollowClick);
-
-            const videoId = followButton.getAttribute('data-video-id');
-            const video = videoList.find(video => video.id === parseInt(videoId));
-            const isFollowing = isVideoFollowing(videoId);
-
-            if (isFollowing) {
-                followButton.style.backgroundColor = 'green';
-            } else {
-                followButton.style.backgroundColor = 'brown';
-            }
-        });
-
-
-        function isVideoFollowing(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            return followedVideos[videoId.toString()] === true;
-        }
-
-        function followVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            followedVideos[videoId.toString()] = true;
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        function unfollowVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            delete followedVideos[videoId.toString()];
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        // Kiểm tra và áp dụng màu sắc ban đầu cho các nút "Follow"
-        followButtons.forEach((followButton) => {
-            const videoId = followButton.getAttribute('data-video-id');
-            const isFollowing = isVideoFollowing(videoId);
-            if (isFollowing) {
-                followButton.style.backgroundColor = 'green'; // Đặt màu sắc cho Follow
-            } else {
-                followButton.style.backgroundColor = 'brown'; // Đặt màu sắc cho Unfollow
-            }
-        });
-
-    </script>
-
-    <script>
-        // Lấy thông tin người dùng từ localStorage
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
-        if (user) {
-            // Lấy tham chiếu tới phần tử img trong class "avtcmt"
-            const avtcmtImg = document.querySelector('.avtcmt img');
-
-            // Đặt đường dẫn ảnh từ URL lưu trong thông tin người dùng
-            avtcmtImg.src = user.avturl;
-        }
-        // Gán sự kiện submit cho form Comment
-        commentForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Ngăn chặn sự kiện submit mặc định của form
-
-            // Lấy dữ liệu "name" từ Local Storage
-
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            const storedName = storedUser.name;
-            // Kiểm tra xem dữ liệu "name" có tồn tại không
-            if (storedUser && storedUser.name) {
-                const storedName = storedUser.name;
-
-                if (commentText !== '') {
-                    // Tạo đối tượng chứa thông tin bình luận
-                    const newComment = {
-                        text: commentText,
-                        name: storedName
-                        // Thêm các trường dữ liệu khác của bình luận (nếu có)
-                    };
-
-                    // Gửi bình luận mới lên cơ sở dữ liệu
-                    axios.post('http://localhost:3000/comments', newComment)
-                        .then(response => {
-                            // Xử lý khi bình luận được gửi thành công
-                            console.log('Comment posted:', response.data);
-
-                            // Sau khi bình luận được gửi thành công, bạn có thể làm những việc khác như cập nhật hiển thị bình luận, tải lại danh sách bình luận, v.v.
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-
-                    // Xóa nội dung trong input comment
-                    commentInput.value = '';
-                }
-            }
-        });
-    </script>
-
-
-    <!-- xử lý logic -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#iconButton").click(function () {
-                $("#iconList").toggle();
-            });
-
-            $(".icon-list i").click(function () {
-                var emoji = $(this).text();
-                $("#commentInput").val($("#commentInput").val() + emoji + " ");
-                $("#iconList").hide();
-            });
-        });
-
-        $(window).on('load', function () {
-            $("#iconList").hide();
-        });
-    </script>
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        // Lấy tham chiếu tới các phần tử DOM
-        const videoPlayer = document.getElementById('videoPlayer');
-        const previousButton = document.getElementById('previousButton');
-        const nextButton = document.getElementById('nextButton');
-        const commentForm = document.getElementById('commentForm');
-        const commentInput = document.getElementById('commentInput');
-        const commentsContainer = document.getElementById('commentsContainer');
-        const countCmt = document.querySelector('.countCmt');
-        const countCmt2 = document.querySelector('.countCmt2');
-        // Khởi tạo biến lưu trữ danh sách video
-        let videoList = [];
-
-        // Lấy dữ liệu từ API
-        function fetchVideoData() {
-            axios.get('http://localhost:3000/videos')
-                // axios.get('https://video-data.vercel.app/videos')
-                .then(response => {
-                    // Gán danh sách video từ API vào biến videoList
-                    videoList = response.data;
-                    showVideo(0);
-                    fetchComments(videoList[0].comments);
-                    fillData(videoList[0]); // Gọi hàm fillData để hiển thị dữ liệu video
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        // hiệu ứng trái tim
-        const heartButton = document.querySelector('.heart-button');
-        let isClicked = false;
-
-        heartButton.addEventListener('click', function () {
-            isClicked = !isClicked;
-            heartButton.querySelector('i').classList.toggle('clicked', isClicked);
-        });
-
-        // Hiển thị video
-        function showVideo(index) {
-            const video = videoList[index];
-            videoPlayer.src = video.url;
-            currentVideoIndex = index;
-            fetchComments(video.comments);
-            fillData(video); // Gọi hàm fillData để hiển thị dữ liệu video
-        }
-
-        function fillData(video) {
-            document.getElementById('videoPlayer').src = video.url;
-
-            const nameElements = document.getElementsByClassName('name');
-            for (let i = 0; i < nameElements.length; i++) {
-                nameElements[i].innerText = video.name;
-            }
-
-            const usernameElements = document.getElementsByClassName('username');
-            for (let i = 0; i < usernameElements.length; i++) {
-                usernameElements[i].innerText = video.username;
-            }
-
-            const desElements = document.getElementsByClassName('des');
-            for (let i = 0; i < desElements.length; i++) {
-                desElements[i].innerHTML = video.des;
-            }
-
-            const musicElements = document.getElementsByClassName('music');
-            for (let i = 0; i < musicElements.length; i++) {
-                musicElements[i].innerHTML = video.music;
-            }
-
-            const avtElements = document.getElementsByClassName('avturl');
-            for (let i = 0; i < avtElements.length; i++) {
-                const img = avtElements[i];
-                img.src = video.avturl;
-            }
-
-            const likeCountElement = document.querySelector('.couttim');
-            likeCountElement.innerText = video.likes;
-
-            const commentCountElement = document.querySelector('.countCmt2');
-            commentCountElement.innerText = video.comments.length;
-
-            const shareCountElement = document.querySelector('.countShares');
-            shareCountElement.innerText = video.shares;
-        }
-        // Lấy danh sách bình luận từ API
-        function fetchComments(commentIds) {
-            axios.get('http://localhost:3000/comments')
-                // axios.get('https://video-data.vercel.app/comments')
-                .then(response => {
-                    const comments = response.data;
-                    const videoComments = comments.filter(comment => commentIds.includes(comment.id));
-                    displayComments(videoComments);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-
-        function displayComments(comments) {
-            commentsContainer.innerHTML = '';
-
-            for (let i = 0; i < comments.length; i++) {
-                const comment = comments[i];
-
-                const div = document.createElement('div');
-                div.classList.add('comment-wrapper'); // Thêm class tùy chỉnh cho thẻ <div> (nếu cần)
-
-                const avatar = document.createElement('img');
-                avatar.src = comment.avturl;
-                avatar.classList.add('avatar');
-
-                const infoDiv = document.createElement('div');
-                infoDiv.classList.add('comment-info'); // Thêm class tùy chỉnh cho phần thông tin (nếu cần)
-
-                const liName = document.createElement('li');
-                liName.innerText = `${comment.name}`;
-                liName.classList.add('usercmt')
-
-                const liText = document.createElement('li');
-                liText.innerText = `${comment.text}`;
-                liText.classList.add('textcmt')
-
-                const liTime = document.createElement('li');
-                liTime.innerText = `${comment.date}`;
-                liTime.classList.add('timecmt')
-
-                const like = document.createElement('li');
-                like.innerText = `${comment.likes}`;
-                like.classList.add('like')
-
-                const share = document.createElement('li');
-                share.innerText = `${comment.shares}`;
-                share.classList.add('share')
-
-                infoDiv.appendChild(liName);
-                infoDiv.appendChild(liText);
-                infoDiv.appendChild(liTime);
-
-                div.appendChild(avatar);
-                div.appendChild(infoDiv);
-                commentsContainer.appendChild(div);
-            }
-            countCmt.textContent = comments.length + ' comment' + (comments.length !== 1 ? 's' : ''); // Hiển thị số lượng bình luận
-
-        }
-
-        function getAvatarUrl(userId) {
-            const video = videoList.find(video => video.id === userId);
-            if (video) {
-                return video.avturl; // Lấy đường dẫn ảnh từ trường avturl của dữ liệu video
-            }
-            return './assets/img/logo.png';
-        }
-        // Gửi bình luận mới
-        function postComment(videoId, commentText) {
-            // Lấy dữ liệu "name" từ Local Storage
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            const storedName = storedUser ? storedUser.name : '';
-            const storedAvturl = storedUser ? storedUser.avturl : '';
-            const currentDate = new Date().toLocaleDateString(); // Lấy ngày hiện tại
-
-            axios
-                .post('http://localhost:3000/comments', { text: commentText, name: storedName, avturl: storedAvturl, date: currentDate })
-                // axios.post('https://video-data.vercel.app/comments', { text: commentText })
-                .then(response => {
-                    const newComment = response.data;
-                    const video = videoList[currentVideoIndex];
-                    video.comments.push(newComment.id); // Thêm ID bình luận vào mảng comments của video hiện tại
-                    commentInput.value = '';
-                    countCmt.textContent =
-                        video.comments.length + ' comment' + (video.comments.length !== 1 ? 's' : ''); // Hiển thị số lượng bình luận
-                    // Cập nhật bảng videos trên API server
-                    axios
-                        .put(`http://localhost:3000/videos/${videoId}`, video)
-                        // axios.put(`https://video-data.vercel.app/videos/${videoId}`, video)
-                        .then(response => {
-                            console.log('Video updated:', response.data);
-                            fetchComments(video.comments); // Gọi lại fetchComments để cập nhật danh sách bình luận
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-        // Chuyển video lên
-        function playPreviousVideo() {
-            if (currentVideoIndex > 0) {
-                currentVideoIndex--;
-                showVideo(currentVideoIndex);
-            }
-        }
-
-        // Chuyển video xuống
-        function playNextVideo() {
-            if (currentVideoIndex < videoList.length - 1) {
-                currentVideoIndex++;
-                showVideo(currentVideoIndex);
-            }
-        }
-
-        // Xử lý khi người dùng gửi bình luận
-        function handleCommentSubmit(event) {
-            event.preventDefault(); // Ngăn chặn sự kiện submit mặc định của form
-            const commentText = commentInput.value.trim();
-            if (commentText !== '') {
-                commentInput.disabled = true; // Vô hiệu hóa input bình luận để ngăn người dùng nhập liệu mới
-                postComment(videoList[currentVideoIndex].id, commentText);
-            }
-        }
-
-        // Gán sự kiện click cho các nút chuyển video
-        // Gán sự kiện click cho nút Previous
-        previousButton.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn sự kiện click mặc định
-            playPreviousVideo();
-        });
-
-        // Gán sự kiện click cho nút Next
-        nextButton.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn sự kiện click mặc định
-            playNextVideo();
-        });
-
-        // Gán sự kiện submit cho form Comment
-        commentForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Ngăn chặn sự kiện submit mặc định của form
-            handleCommentSubmit(event);
-        });
-
-        // Lấy dữ liệu video khi trang tải xong
-        window.addEventListener('DOMContentLoaded', fetchVideoData);
-
-
-        // Lấy tham chiếu tới nút "Logout"
-        const logoutButton = document.querySelector('button[style="background-color: brown;"]');
-
-        // Gắn sự kiện click cho nút "Logout"
-        logoutButton.addEventListener('click', function () {
-            // Xóa dữ liệu trong Local Storage
-            localStorage.clear();
-
-            // Chuyển hướng về trang "login.html"
-            window.location.href = 'login.html';
-        });
-    </script>
+    </section>
 </body>
-
 </html>
