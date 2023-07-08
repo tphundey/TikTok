@@ -12,8 +12,10 @@
       "likes": 12,
       "shares": 4,
       "comments": [
-        8,
-        10
+        1,
+        2,
+        3,
+        5
       ]
     },
     {
@@ -28,7 +30,7 @@
       "likes": 2,
       "shares": 4,
       "comments": [
-        9
+        4
       ]
     },
     {
@@ -125,40 +127,39 @@
   ],
   "comments": [
     {
-      "user": "Dĩnh tu tiên",
-      "text": "cháy quá đi mất !",
-      "id": 3,
-      "time": "3-29"
+      "text": "😅 🫠",
+      "name": "Dĩnh tu tiên",
+      "avturl": "./assets/img/daidien.png",
+      "date": "7/8/2023",
+      "id": 1
     },
     {
-      "user": "Dĩnh tu tiên",
-      "text": "😇",
-      "id": 6,
-      "time": "3-29"
+      "text": "xinh thé nhò 🙃",
+      "name": "Dĩnh tu tiên",
+      "avturl": "./assets/img/4.png",
+      "date": "7/8/2023",
+      "id": 2
     },
     {
-      "user": "Dĩnh tu tiên",
-      "text": "😉 😁",
-      "id": 7,
-      "time": "7-7"
+      "text": "😁",
+      "name": "Mai Thu Thủy",
+      "avturl": "./assets/img/1.png",
+      "date": "7/8/2023",
+      "id": 3
     },
     {
-      "user": "Dĩnh tu tiên",
-      "text": "không mất tiền nói đê 🤣",
-      "id": 8,
-      "time": "7-7"
+      "text": "😉 🫠",
+      "name": "Mai Thu Thủy",
+      "avturl": "./assets/img/1.png",
+      "date": "7/8/2023",
+      "id": 4
     },
     {
-      "user": "Dĩnh tu tiên",
-      "text": "đi chơii",
-      "id": 9,
-      "time": "7-7"
-    },
-    {
-      "user": "Dĩnh tu tiên",
-      "text": "alo alo",
-      "id": 10,
-      "time": "7-7"
+      "text": "😅",
+      "name": "Mai Thu Thủy",
+      "avturl": "./assets/img/1.png",
+      "date": "7/8/2023",
+      "id": 5
     }
   ],
   "likes": [
@@ -173,6 +174,61 @@
     {
       "videoId": 3,
       "count": 5
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "mi",
+      "username": "thuwu love u",
+      "avturl": "./assets/img/1.png",
+      "videos": [
+        1
+      ],
+      "comments": []
+    },
+    {
+      "id": 2,
+      "name": "Chocopie",
+      "username": "24122003",
+      "avturl": "./assets/img/daidien.png",
+      "videos": [
+        2
+      ],
+      "comments": []
+    },
+    {
+      "id": 3,
+      "name": "yenkim0703",
+      "username": "thor",
+      "avturl": "./assets/img/3.png",
+      "videos": [
+        4,
+        6,
+        7,
+        8,
+        9
+      ],
+      "comments": []
+    },
+    {
+      "id": 4,
+      "name": "Hải an",
+      "username": "thỏ",
+      "avturl": "./assets/img/4.png",
+      "videos": [
+        5
+      ],
+      "comments": []
+    },
+    {
+      "id": 5,
+      "name": "Dĩnh tu tiên",
+      "username": "dinhtutien",
+      "password": "admin",
+      "avturl": "./assets/img/4.png",
+      "videos": [],
+      "comments": []
     }
   ]
 }
