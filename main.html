@@ -103,100 +103,88 @@
 
 
     <script>
-        function fetchVideoData() {
-            axios
-                .get('http://localhost:3000/videos')
-                .then(response => {
-                    videoList = response.data;
-                    showVideo(0);
-                    fetchComments(videoList[0].comments);
-                    fillData(videoList[0]);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        function handleFollowClick(event) {
-            // Lấy videoId từ lớp CSS của phần tử .fl
-            const followButton = event.target;
-            const videoId = followButton.getAttribute('data-video-id');
-            const isFollowing = isVideoFollowing(videoId);
-
-            if (isFollowing) {
-                unfollowVideo(videoId);
-                followButton.style.backgroundColor = 'brown'; // Đặt lại màu sắc cho Unfollow
+        // Lấy phần tử .fl
+        const followButton = document.querySelector('.fl');
+        
+        // Lấy id video từ thuộc tính data-video-id
+        const videoId = followButton.dataset.videoId;
+        
+        // Lấy tất cả các name đã được lưu trong local storage
+        let savedNames = JSON.parse(localStorage.getItem('savedNames')) || [];
+        
+        // Kiểm tra xem videoId đã được lưu hay chưa
+        const isFollowed = savedNames.includes(videoId);
+        
+        // Cập nhật trạng thái ban đầu của nút follow
+        updateFollowButtonState(isFollowed);
+        
+        // Thêm sự kiện click cho nút follow
+        followButton.addEventListener('click', function() {
+            // Kiểm tra class 'name' đã thay đổi hay chưa
+            const nameElement = document.querySelector('.name');
+            const name = nameElement.textContent.trim();
+            
+            if (!savedNames.includes(name)) {
+                // Lưu name vào mảng savedNames
+                savedNames.push(name);
+                
+                // Cập nhật trạng thái nút follow
+                updateFollowButtonState(true);
+                
+                // Lưu mảng savedNames vào local storage
+                localStorage.setItem('savedNames', JSON.stringify(savedNames));
+                
+                // Thực hiện hành động follow
+                followAction(videoId);
             } else {
-                followVideo(videoId);
-                followButton.style.backgroundColor = 'green'; // Đặt lại màu sắc cho Follow
-            }
-        }
-
-        // Hàm kiểm tra trạng thái Follow của video
-        function isVideoFollowing(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            return followedVideos[videoId] === true;
-        }
-
-        // Hàm thực hiện Follow video
-        function followVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            followedVideos[videoId] = true;
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        // Hàm hủy Follow video
-        function unfollowVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            delete followedVideos[videoId];
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        // Kiểm tra và áp dụng màu sắc ban đầu cho các nút "Follow"
-        const followButtons = document.querySelectorAll('.fl');
-        followButtons.forEach((followButton) => {
-            followButton.addEventListener('click', handleFollowClick);
-
-            const videoId = followButton.getAttribute('data-video-id');
-            const video = videoList.find(video => video.id === parseInt(videoId));
-            const isFollowing = isVideoFollowing(videoId);
-
-            if (isFollowing) {
-                followButton.style.backgroundColor = 'green';
-            } else {
-                followButton.style.backgroundColor = 'brown';
+                // Hủy follow nếu name đã tồn tại trong mảng savedNames
+                const index = savedNames.indexOf(name);
+                
+                if (index !== -1) {
+                    savedNames.splice(index, 1);
+                    
+                    // Cập nhật trạng thái nút follow
+                    updateFollowButtonState(false);
+                    
+                    // Lưu mảng savedNames vào local storage
+                    localStorage.setItem('savedNames', JSON.stringify(savedNames));
+                    
+                    // Thực hiện hành động unfollow
+                    unfollowAction(videoId);
+                }
             }
         });
-
-
-        function isVideoFollowing(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            return followedVideos[videoId.toString()] === true;
-        }
-
-        function followVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            followedVideos[videoId.toString()] = true;
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        function unfollowVideo(videoId) {
-            const followedVideos = JSON.parse(localStorage.getItem('followedVideos')) || {};
-            delete followedVideos[videoId.toString()];
-            localStorage.setItem('followedVideos', JSON.stringify(followedVideos));
-        }
-
-        // Kiểm tra và áp dụng màu sắc ban đầu cho các nút "Follow"
-        followButtons.forEach((followButton) => {
-            const videoId = followButton.getAttribute('data-video-id');
-            const isFollowing = isVideoFollowing(videoId);
-            if (isFollowing) {
-                followButton.style.backgroundColor = 'green'; // Đặt màu sắc cho Follow
+        
+        // Hàm cập nhật trạng thái nút follow
+        function updateFollowButtonState(isFollowed) {
+            if (isFollowed) {
+                followButton.textContent = 'Unfollow';
             } else {
-                followButton.style.backgroundColor = 'brown'; // Đặt màu sắc cho Unfollow
+                followButton.textContent = 'Follow';
+            }
+        }
+        
+        // Hàm thực hiện hành động follow
+        function followAction(videoId) {
+            // TODO: Thực hiện hành động follow
+            console.log('Follow video', videoId);
+        }
+        
+        // Hàm thực hiện hành động unfollow
+        function unfollowAction(videoId) {
+            // TODO: Thực hiện hành động unfollow
+            console.log('Unfollow video', videoId);
+        }
+        
+        // Kiểm tra và khôi phục trạng thái follow sau khi reload lại trang
+        window.addEventListener('load', function() {
+            const nameElement = document.querySelector('.name');
+            const name = nameElement.textContent.trim();
+            
+            if (savedNames.includes(name)) {
+                updateFollowButtonState(true);
             }
         });
-
     </script>
 
     <script>
